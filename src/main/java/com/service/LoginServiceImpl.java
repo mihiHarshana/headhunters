@@ -17,4 +17,10 @@ public class LoginServiceImpl implements LoginService{
 		return loginDao.getUser(userId);
 	}
 
+
+	public User login(String userName, String password) {
+	
+		return  loginDao.login(userName, password);
+	}
+
 }

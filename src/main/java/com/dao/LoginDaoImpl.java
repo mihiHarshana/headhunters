@@ -24,4 +24,18 @@ public class LoginDaoImpl implements LoginDao {
         return user;
 	}
 
+	@Override
+	public User login(String userName, String password) {
+		User user = null;
+		try {
+            Session session = sessionFactory.openSession();
+            user =  (User )session.createQuery("from User where u_name = '" + userName + "' and u_password = '" + password + "'").uniqueResult();
+           
+          //  user = (User) session.get(User.class, userName );  
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+	}
+
 }

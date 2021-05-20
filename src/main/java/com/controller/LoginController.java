@@ -16,7 +16,7 @@ import com.service.LoginService;
  */
 
 @RestController
-@RequestMapping("/login/")
+@RequestMapping("/api/")
 public class LoginController {
 	
 	@Autowired
@@ -34,6 +34,15 @@ public class LoginController {
 	@GetMapping("data-get")
 	public String getData() {
 		return "Hello";
+		
+	}
+	
+	@GetMapping("login")
+	public User getLogin(@RequestParam String userName, String password) {
+		
+		User user = null;
+		user = loginService.login(userName, password);
+		return user;
 		
 	}
 
