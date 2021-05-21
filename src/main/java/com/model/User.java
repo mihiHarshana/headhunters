@@ -1,12 +1,13 @@
 package com.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  *
@@ -15,12 +16,18 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "user")
 @Entity
 public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="u_id")
 	private int u_id ;
+	@Column(name="u_name")
 	private String u_name;
+	@Column(name="u_password")
 	private String u_password;
+	@Column(name="u_type")
 	private String u_type;
 	
-	@GeneratedValue @Id
+	
 	public int getU_id() {
 		return u_id;
 	}
