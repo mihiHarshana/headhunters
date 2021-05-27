@@ -17,11 +17,11 @@ import com.model.User;
 
 @Repository
 public class JobSeekerDaoImpl implements JobSeekerDao {
-
+ 
 	@Autowired
 	SessionFactory sessionFactory;
-
-	public CV getCV(int userId) {
+ 
+	public CV getCV(int Id) {
 		Session session = sessionFactory.openSession();
 		CV cv = null;
 		try {
