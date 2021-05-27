@@ -25,7 +25,7 @@ public class JobSeekerDaoImpl implements JobSeekerDao {
 		Session session = sessionFactory.openSession();
 		CV cv = null;
 		try {
-			cv = (CV) session.createQuery("from CV where u_id=" + userId).uniqueResult();
+			cv = (CV) session.createQuery("from CV").uniqueResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
