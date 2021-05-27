@@ -1,11 +1,15 @@
 package com.dto;
-
+/*
+ * 200 - OK
+ * 204 - system error
+ * 500 - Exception or error or Internal Server Error
+ */
 public class Response {
 
 	public int code;
 	public int id;
-	public String type;
 	public String message;
+	public Object object;
 
 	public int getCode() {
 		return code;
@@ -23,14 +27,6 @@ public class Response {
 		this.id = id;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
 	public String getMessage() {
 		return message;
 	}
@@ -38,11 +34,20 @@ public class Response {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
 
-	public Response(int code, int id, String type, String message) {
+	public Object getObject() {
+		return object;
+	}
+
+	public void setObject(Object object) {
+		this.object = object;
+	}
+
+	public Response(int code, int id, String message, Object object) {
 		this.code = code;
 		this.id = id;
-		this.type = type;
 		this.message = message;
+		this.object = object;
 	}
 }
