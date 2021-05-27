@@ -21,11 +21,11 @@ public class JobSeekerDaoImpl implements JobSeekerDao {
 	@Autowired
 	SessionFactory sessionFactory;
  
-	public CV getCV(int Id) {
+	public CV getCV(int id) {
 		Session session = sessionFactory.openSession();
 		CV cv = null;
 		try {
-			cv = (CV) session.createQuery("from CV").uniqueResult();
+			cv = (CV) session.createQuery(" from CV ").uniqueResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
