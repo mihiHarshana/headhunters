@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dao.JobSeekerDaoImpl;
 import com.dto.Response;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.model.CV;
 import com.model.User;
+import com.service.JobSeekerService;
 import com.service.LoginService;
 import com.service.UserRegistrationService;
 
@@ -29,6 +32,9 @@ public class UserRegistrationController {
 
 	@Autowired
 	UserRegistrationService userRegistrationService;
+	
+	@Autowired
+	JobSeekerService jobSeekerService;
 
 	@GetMapping("get-user")
 	public User getUser(@RequestParam int userId) {
@@ -50,6 +56,9 @@ public class UserRegistrationController {
 			User user = objectMapper.readValue(userJson, User.class);
 			int userId = userRegistrationService.registerUser(user);
 			if (userId != 0) {
+				CV cv = new CV();
+				cv.setU_id(userId);
+				int cvId = this.jobSeekerService.addCV(cv);
 				response = new Response(200, userId, "User Registerd sucessfully", null);
 			} else {
 				response = new Response(204, 0, "Operation is failed", null);

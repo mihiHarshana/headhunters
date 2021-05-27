@@ -26,6 +26,7 @@ import com.model.CV;
 import com.model.Qualification;
 import com.model.QualificationType;
 import com.pdf.generator.GeneratePdfReport;
+import com.service.JobSeekerService;
 import com.service.QualificationService;
 
 import org.springframework.http.HttpHeaders;
@@ -42,6 +43,9 @@ public class QualificationController {
 	
 	@Autowired
 	GeneratePdfReport pdfGenerator;
+	
+	@Autowired
+	JobSeekerService jobSeekerService;
 
 	@PostMapping("add-qualification")
 	public Response addQualification(@RequestBody String json) {
@@ -130,11 +134,12 @@ public class QualificationController {
 	
 	@RequestMapping(value = "pdfReport", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> citiesReport() {
+    public ResponseEntity<InputStreamResource> citiesReport(@RequestParam int userId) {
 
         List<QualificationType> qualificationTypes = (List<QualificationType>) qualificationService.getQualificationTypes();
-
-        ByteArrayInputStream bis = GeneratePdfReport.citiesReport(qualificationTypes);
+        CV cv = jobSeekerService.getCV(userId);
+        List<Qualification> qualifications = qualificationService.getQualificationsByUserID(userId);
+        ByteArrayInputStream bis = GeneratePdfReport.citiesReport(qualificationTypes, cv, qualifications);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=citiesreport.pdf");

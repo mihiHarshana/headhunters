@@ -37,17 +37,17 @@ public class JobSeekerDaoImpl implements JobSeekerDao {
 	@Override
 	public int addCV(CV cv) {
 		Session session = sessionFactory.openSession();
-		int id = 0;
+		int cvId = 0;
 		try {
-			session.save(cv);
-			Serializable serializable = session.getIdentifier(cv);
-			id = (int) serializable;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
+			 session.save(cv);
+			 Serializable serializable = session.getIdentifier(cv);
+	         cvId = (int) serializable;
+		}catch (Exception e) {
+			 e.printStackTrace();
+		}finally {
 			session.close();
 		}
-		return id;
+		return cvId;
 	}
 
 	@Override

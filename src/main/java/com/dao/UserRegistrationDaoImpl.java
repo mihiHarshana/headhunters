@@ -68,5 +68,6 @@ public class UserRegistrationDaoImpl implements UserRegistrationDao {
 		}
 		return id;
 	}
+	
 
 }
