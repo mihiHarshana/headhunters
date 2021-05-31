@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -47,4 +48,26 @@ public class UserRegistrationDaoImpl implements UserRegistrationDao {
 		}
 		return userId;
 	}
+	
+	@Override
+	public int updateUser(User user) {
+		Transaction transaction = null;
+		Session session = sessionFactory.openSession();
+
+		int id = 0;
+		try {
+			transaction = session.beginTransaction();
+			session.saveOrUpdate(user);
+			Serializable serializable = session.getIdentifier(user);
+			id = (int) serializable;
+			transaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return id;
+	}
+	
+
 }

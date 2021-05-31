@@ -25,7 +25,11 @@ public class UserRegistrationServiceImpl implements UserRegistrationService{
 		return userRegistrationDao.registerUser(user);
 	}
 
-
+	@Override
+	@Transactional(readOnly=false, rollbackFor=RuntimeException.class)
+	public int updateUser(User user) {
+		return userRegistrationDao.updateUser(user);
+	}
 
 
 
