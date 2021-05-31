@@ -97,13 +97,25 @@ public class QualificationDaoImpl implements QualificationDao {
 		List<JobSeekerQualificationsDTO> jobSeekerQualificationList = new ArrayList<>();
 		try {
 			String sql = "SELECT a.u_id, a.f_name, a.l_name, a.emailaddress, a.tel_no, a.address" + " FROM cv as a" + " INNER JOIN qualification as b "
-					+ " ON a.u_id = b.u_id where b.value like '%" + searchValue + "%'";
-
+					+ " ON a.u_id = b.u_id where ( b.value like '%" + searchValue + "%')";
+			if (qualificationTypes.length > 0) {
+				sql += " and ( ";
+			}
 			for (int i = 0; i < qualificationTypes.length; i++) {
-				sql += " or b.q_type=" + qualificationTypes[i];
+				if (i==0) {
+					sql += "b.q_type=" + qualificationTypes[i];
+				}
+				
+				if (i>0) {
+					sql += " or b.q_type=" + qualificationTypes[i];
+				}
+			}
+			if (qualificationTypes.length > 0) {
+				sql += " ) ";
 			}
 
 			sql += " GROUP BY a.u_id ";
+			System.out.println(sql);
 			SQLQuery query = session.createSQLQuery(sql);
 			List results = query.list();
 			for (int i = 0; i < results.size(); i++) {
